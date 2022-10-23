@@ -1,19 +1,19 @@
 import './App.css'
 import { useState } from 'react';
+let globalid = 0;
 function App() {
-  const [task, settask] = useState('')
-  const [todos, settodo] = useState([])
+  const [task, settask] = useState('');
+  const [todos, settodo] = useState([]);
 
   const update = () => {
     settodo(todos => {
-      return [...todos, task];
+      return [...todos,{todo:task , id : globalid+=1} ];
     });
     settask('');
   }
-  const del = () => {
-    settodo(todos => {
-      return todos.slice(0, todos.length - 1)
-    })
+  const del = (itemid) => {
+    console.log(itemid)
+    settodo(todos => todos.filter(item =>  itemid !== item.id))
   }
   const checkenter = (e) =>{
     if(e.keyCode == 13){
@@ -21,18 +21,22 @@ function App() {
     }
   }
   return (
-    <>
+    <main>
       <h1>Todo App</h1>
       <input onKeyDown={checkenter} type="text" value={task} onChange={event => settask(event.target.value)} ></input>
       <button onClick={update}>click me</button>
 
       <ul>
-        {todos.map(todo => {
-          return <li>{todo}</li>
+        {todos.map(item => {
+          return <div key = {item.id}>
+            <li>{item.todo}</li>
+                 <button onClick={() => del(item.id)}>delete task</button>
+              </div>
+                 
         })}
       </ul>
-      <button onClick={del}>delete task</button>
-    </>
+      
+    </main>
   )
 }
 export default App;
