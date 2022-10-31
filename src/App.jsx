@@ -6,18 +6,18 @@ function App() {
   const [todos, settodo] = useState([]);
   const update = () => {
     console.log(globalid)
-    
+
     settodo(todos => {
       return [...todos, { todo: task, id: globalid }];
     });
     globalid++;
-    if(todos.length == 0){
+    if (todos.length == 0) {
       globalid = 1;
     }
     settask('');
   }
   const del = (itemid) => {
-  
+
     settodo(todos => todos.filter(item => itemid !== item.id))
 
   }
@@ -28,7 +28,7 @@ function App() {
   }
   return (
     <main>
-      <h1>Todo App</h1>
+      <h1 style={{ background: 'black',color: 'white' }}>Todo App</h1>
       <input onKeyDown={checkenter} type="text" value={task} onChange={event => settask(event.target.value)} ></input>
       <button onClick={update}>click me</button>
 
